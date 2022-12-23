@@ -4,10 +4,10 @@ import (
 	"errors"
 	"sync"
 
-	"github.com/Marcel-MD/rooms-go-api/dto"
-	"github.com/Marcel-MD/rooms-go-api/logger"
-	"github.com/Marcel-MD/rooms-go-api/models"
-	"github.com/Marcel-MD/rooms-go-api/repositories"
+	"github.com/Marcel-MD/xmas-faf-api/dto"
+	"github.com/Marcel-MD/xmas-faf-api/logger"
+	"github.com/Marcel-MD/xmas-faf-api/models"
+	"github.com/Marcel-MD/xmas-faf-api/repositories"
 	"github.com/rs/zerolog/log"
 )
 

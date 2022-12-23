@@ -3,7 +3,7 @@ package middleware
 import (
 	"net/http"
 
-	"github.com/Marcel-MD/rooms-go-api/token"
+	"github.com/Marcel-MD/xmas-faf-api/token"
 	"github.com/gin-gonic/gin"
 	"github.com/rs/zerolog/log"
 )

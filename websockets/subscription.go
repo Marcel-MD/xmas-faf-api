@@ -5,9 +5,9 @@ import (
 	"encoding/json"
 	"errors"
 
-	"github.com/Marcel-MD/rooms-go-api/logger"
-	"github.com/Marcel-MD/rooms-go-api/models"
-	"github.com/Marcel-MD/rooms-go-api/services"
+	"github.com/Marcel-MD/xmas-faf-api/logger"
+	"github.com/Marcel-MD/xmas-faf-api/models"
+	"github.com/Marcel-MD/xmas-faf-api/services"
 	"github.com/go-redis/redis/v9"
 	"github.com/gorilla/websocket"
 	"github.com/rs/zerolog/log"

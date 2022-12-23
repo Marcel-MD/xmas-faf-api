@@ -7,7 +7,7 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/Marcel-MD/rooms-go-api/rdb"
+	"github.com/Marcel-MD/xmas-faf-api/rdb"
 	"github.com/gin-gonic/gin"
 	"github.com/go-redis/redis/v9"
 )

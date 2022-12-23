@@ -5,10 +5,10 @@ import (
 	"fmt"
 	"sync"
 
-	"github.com/Marcel-MD/rooms-go-api/dto"
-	"github.com/Marcel-MD/rooms-go-api/models"
-	"github.com/Marcel-MD/rooms-go-api/repositories"
-	"github.com/Marcel-MD/rooms-go-api/token"
+	"github.com/Marcel-MD/xmas-faf-api/dto"
+	"github.com/Marcel-MD/xmas-faf-api/models"
+	"github.com/Marcel-MD/xmas-faf-api/repositories"
+	"github.com/Marcel-MD/xmas-faf-api/token"
 	"github.com/rs/zerolog/log"
 	"golang.org/x/crypto/bcrypt"
 )

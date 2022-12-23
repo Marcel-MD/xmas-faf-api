@@ -3,7 +3,7 @@ package repositories
 import (
 	"sync"
 
-	"github.com/Marcel-MD/rooms-go-api/models"
+	"github.com/Marcel-MD/xmas-faf-api/models"
 	"github.com/rs/zerolog/log"
 	"gorm.io/gorm"
 )

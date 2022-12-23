@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/Marcel-MD/rooms-go-api/handlers"
-	"github.com/Marcel-MD/rooms-go-api/logger"
+	"github.com/Marcel-MD/xmas-faf-api/handlers"
+	"github.com/Marcel-MD/xmas-faf-api/logger"
 	"github.com/joho/godotenv"
 	"github.com/rs/zerolog/log"
 )

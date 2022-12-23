@@ -3,9 +3,9 @@ package handlers
 import (
 	"net/http"
 
-	"github.com/Marcel-MD/rooms-go-api/dto"
-	"github.com/Marcel-MD/rooms-go-api/middleware"
-	"github.com/Marcel-MD/rooms-go-api/services"
+	"github.com/Marcel-MD/xmas-faf-api/dto"
+	"github.com/Marcel-MD/xmas-faf-api/middleware"
+	"github.com/Marcel-MD/xmas-faf-api/services"
 	"github.com/gin-gonic/gin"
 )
 

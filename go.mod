@@ -1,4 +1,4 @@
-module github.com/Marcel-MD/rooms-go-api
+module github.com/Marcel-MD/xmas-faf-api
 
 go 1.18
 

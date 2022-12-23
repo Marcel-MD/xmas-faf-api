@@ -4,7 +4,7 @@ import (
 	"os"
 	"sync"
 
-	"github.com/Marcel-MD/rooms-go-api/middleware"
+	"github.com/Marcel-MD/xmas-faf-api/middleware"
 	"github.com/gin-gonic/gin"
 	"github.com/rs/zerolog/log"
 )

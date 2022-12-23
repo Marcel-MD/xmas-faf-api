@@ -3,8 +3,8 @@ package websockets
 import (
 	"errors"
 
-	"github.com/Marcel-MD/rooms-go-api/dto"
-	"github.com/Marcel-MD/rooms-go-api/models"
+	"github.com/Marcel-MD/xmas-faf-api/dto"
+	"github.com/Marcel-MD/xmas-faf-api/models"
 )
 
 func (s *subscription) handleMessage(msg dto.WebSocketMessage) error {

@@ -3,8 +3,8 @@ package handlers
 import (
 	"net/http"
 
-	"github.com/Marcel-MD/rooms-go-api/middleware"
-	"github.com/Marcel-MD/rooms-go-api/websockets"
+	"github.com/Marcel-MD/xmas-faf-api/middleware"
+	"github.com/Marcel-MD/xmas-faf-api/websockets"
 	"github.com/gin-gonic/gin"
 )
 

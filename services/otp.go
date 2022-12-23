@@ -9,7 +9,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/Marcel-MD/rooms-go-api/rdb"
+	"github.com/Marcel-MD/xmas-faf-api/rdb"
 	"github.com/go-redis/redis/v9"
 	"github.com/rs/zerolog/log"
 )
