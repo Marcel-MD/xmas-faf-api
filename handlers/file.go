@@ -1,0 +1,68 @@
+package handlers
+
+import (
+	"io"
+
+	"github.com/Marcel-MD/xmas-faf-api/middleware"
+	"github.com/Marcel-MD/xmas-faf-api/services"
+	"github.com/gin-gonic/gin"
+)
+
+type fileHandler struct {
+	service services.IFileService
+}
+
+func routeFileHandler(router *gin.RouterGroup) {
+	h := &fileHandler{
+		service: services.GetFileService(),
+	}
+
+	r := router.Group("/files")
+	r.GET("/:post_id", h.find)
+
+	a := r.Use(middleware.JwtAuth())
+	a.POST("/:post_id", h.create)
+	a.DELETE("/:id", h.delete)
+}
+
+func (h *fileHandler) find(c *gin.Context) {
+	postID := c.Param("post_id")
+
+	files := h.service.FindByPostID(postID)
+
+	c.JSON(200, files)
+}
+
+func (h *fileHandler) create(c *gin.Context) {
+	postID := c.Param("post_id")
+
+	form, err := c.FormFile("file")
+	if err != nil {
+		c.JSON(400, gin.H{"error": err.Error()})
+		return
+	}
+
+	file, err := form.Open()
+	if err != nil {
+		c.JSON(400, gin.H{"error": err.Error()})
+		return
+	}
+
+	defer file.Close()
+
+	data, err := io.ReadAll(file)
+	if err != nil {
+		c.JSON(400, gin.H{"error": err.Error()})
+		return
+	}
+
+	h.service.Create(postID, form.Filename, data)
+}
+
+func (h *fileHandler) delete(c *gin.Context) {
+	id := c.Param("id")
+
+	h.service.Delete(id)
+
+	c.JSON(200, gin.H{"message": "File deleted"})
+}

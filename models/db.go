@@ -32,20 +32,7 @@ func initDB() *gorm.DB {
 	db.AutoMigrate(&User{})
 	db.AutoMigrate(&Training{})
 	db.AutoMigrate(&Post{})
+	db.AutoMigrate(&File{})
 
 	return db
-}
-
-func Paginate(page int, size int) func(db *gorm.DB) *gorm.DB {
-	return func(db *gorm.DB) *gorm.DB {
-		switch {
-		case size > 100:
-			size = 100
-		case size <= 0:
-			size = 10
-		}
-
-		offset := (page - 1) * size
-		return db.Offset(offset).Limit(size)
-	}
 }

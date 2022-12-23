@@ -2,7 +2,6 @@ package handlers
 
 import (
 	"net/http"
-	"strconv"
 
 	"github.com/Marcel-MD/xmas-faf-api/dto"
 	"github.com/Marcel-MD/xmas-faf-api/middleware"
@@ -28,22 +27,10 @@ func routePostHandler(router *gin.RouterGroup) {
 
 func (h *postHandler) find(c *gin.Context) {
 	trainingID := c.Param("training_id")
-	var err error
-	params := dto.PostQueryParams{}
-
-	params.Page, err = strconv.Atoi(c.Query("page"))
-	if err != nil {
-		params.Page = 1
-	}
-
-	params.Size, err = strconv.Atoi(c.Query("size"))
-	if err != nil {
-		params.Size = 20
-	}
 
 	userID := c.GetString("user_id")
 
-	posts, err := h.service.FindByTrainingID(trainingID, userID, params)
+	posts, err := h.service.FindByTrainingID(trainingID, userID)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return

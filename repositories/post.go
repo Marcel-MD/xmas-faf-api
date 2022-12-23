@@ -9,7 +9,7 @@ import (
 )
 
 type IPostRepository interface {
-	FindByTrainingID(trainingID string, page, size int) []models.Post
+	FindByTrainingID(trainingID string) []models.Post
 	FindByID(id string) (models.Post, error)
 	Create(post *models.Post) error
 	Update(post *models.Post) error
@@ -35,18 +35,17 @@ func GetPostRepository() IPostRepository {
 	return postRepository
 }
 
-func (r *PostRepository) FindByTrainingID(trainingID string, page, size int) []models.Post {
+func (r *PostRepository) FindByTrainingID(trainingID string) []models.Post {
 	var posts []models.Post
 
-	r.DB.Scopes(models.Paginate(page, size)).Model(&models.Post{}).
-		Order("created_at desc").Find(&posts, "training_id = ?", trainingID)
+	r.DB.Model(&models.Post{}).Preload("Files").Order("created_at desc").Find(&posts, "training_id = ?", trainingID)
 
 	return posts
 }
 
 func (r *PostRepository) FindByID(id string) (models.Post, error) {
 	var post models.Post
-	err := r.DB.First(&post, "id = ?", id).Error
+	err := r.DB.First(&post, "id = ?", id).Preload("Files").Error
 
 	return post, err
 }

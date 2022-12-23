@@ -24,6 +24,7 @@ func InitRouter() {
 		routeUserHandler(r)
 		routeTrainingHandler(r)
 		routePostHandler(r)
+		routeFileHandler(r)
 
 		port := os.Getenv("PORT")
 		if port == "" {

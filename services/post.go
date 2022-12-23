@@ -12,7 +12,7 @@ import (
 )
 
 type IPostService interface {
-	FindByTrainingID(trainingID, userID string, params dto.PostQueryParams) ([]models.Post, error)
+	FindByTrainingID(trainingID, userID string) ([]models.Post, error)
 	Create(trainingID, userID string, dto dto.CreatePost) (models.Post, error)
 	Update(postID, userID string, dto dto.UpdatePost) (models.Post, error)
 	Delete(postID, userID string) (models.Post, error)
@@ -41,7 +41,7 @@ func GetPostService() IPostService {
 	return postService
 }
 
-func (s *PostService) FindByTrainingID(trainingID, userID string, params dto.PostQueryParams) ([]models.Post, error) {
+func (s *PostService) FindByTrainingID(trainingID, userID string) ([]models.Post, error) {
 	log.Debug().Str(logger.TrainingID, trainingID).Str(logger.UserID, userID).Msg("Finding posts")
 
 	var posts []models.Post
@@ -61,7 +61,7 @@ func (s *PostService) FindByTrainingID(trainingID, userID string, params dto.Pos
 		return posts, err
 	}
 
-	posts = s.postRepository.FindByTrainingID(trainingID, params.Page, params.Size)
+	posts = s.postRepository.FindByTrainingID(trainingID)
 
 	return posts, nil
 }
