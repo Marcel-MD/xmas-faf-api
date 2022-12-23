@@ -1,8 +1,8 @@
-# Rooms API
+# Trainings API
 
 ## Description
 
-Multi-room chat application developed with [Gin](https://gin-gonic.com/), [GORM](https://gorm.io/index.html), [Go Redis](https://redis.uptrace.dev/) and [Gorilla WebSocket](https://pkg.go.dev/github.com/gorilla/websocket).
+Training application developed with [Gin](https://gin-gonic.com/), [GORM](https://gorm.io/index.html), [Go Redis](https://redis.uptrace.dev/) and [Gorilla WebSocket](https://pkg.go.dev/github.com/gorilla/websocket).
 Work in progress...
 
 ## Environment Variables
@@ -10,7 +10,7 @@ Work in progress...
 Create a `.env` file in the root directory. And add these default values:
 
 ```
-DATABASE_URL=postgres://postgres:password@postgres:5432/rooms
+DATABASE_URL=postgres://postgres:password@postgres:5432/trainings
 REDIS_URL=redis://:password@redis:6379/0
 API_SECRET=SecretSecretSecret
 TOKEN_HOUR_LIFESPAN=12
@@ -28,7 +28,7 @@ OTP_EXPIRY=10m
 If you want to use SMTP for one time password emails. Add your SMTP credentials:
 
 ```
-SENDER_NAME=Rooms 💬
+SENDER_NAME=Only Ada 💬
 SMTP_HOST=smtp.gmail.com
 SMTP_PORT=587
 EMAIL=mail@gmail.com
@@ -84,7 +84,6 @@ For authentication are used bearer tokens.
       "firstName": "First",
       "lastName": "Last",
       "email": "firstlast@mail.com",
-      "phone": "123456789",
       "password": "password",
       "otp": "123456"
     }
@@ -117,8 +116,7 @@ For authentication are used bearer tokens.
     {
       "firstName": "First",
       "lastName": "Last",
-      "email": "firstlast@mail.com",
-      "phone": "123456789"
+      "email": "firstlast@mail.com"
     }
     ```
 
@@ -129,7 +127,6 @@ For authentication are used bearer tokens.
       "firstName": "First",
       "lastName": "Last",
       "email": "firstlast@mail.com",
-      "phone": "123456789",
       "otp": "123456"
     }
     ```
@@ -138,39 +135,39 @@ For authentication are used bearer tokens.
 
   - [DELETE] `/:id/roles/:role` - Remove role from user
 
-- **Room** `/api/rooms`
+- **Training** `/api/trainings`
 
-  - [GET] `/` - Get all rooms
+  - [GET] `/` - Get all trainings
 
-  - [GET] `/:id` - Get room by ID
+  - [GET] `/:id` - Get training by ID
 
-  - [POST] `/` - Create room
-
-    ```json
-    {
-      "name": "room"
-    }
-    ```
-
-  - [PUT] `/:id` - Update room by ID
+  - [POST] `/` - Create training
 
     ```json
     {
-      "name": "updated room"
+      "name": "training"
     }
     ```
 
-  - [DELETE] `/:id` - Delete room by ID
+  - [PUT] `/:id` - Update training by ID
 
-  - [POST] `/:room_id/users/:user_id` - Add user to room
+    ```json
+    {
+      "name": "updated training"
+    }
+    ```
 
-  - [DELETE] `/:room_id/users/:user_id` - Remove user from room
+  - [DELETE] `/:id` - Delete training by ID
 
-- **Message** `/api/messages`
+  - [POST] `/:training_id/users/:user_id` - Add user to training
 
-  - [GET] `/:room_id?page=1&size=10` - Get paginated messages by room ID
+  - [DELETE] `/:training_id/users/:user_id` - Remove user from training
 
-  - [POST] `/:room_id` - Create message
+- **Post** `/api/posts`
+
+  - [GET] `/:training_id?page=1&size=10` - Get paginated posts by training ID
+
+  - [POST] `/:training_id` - Create post
 
     ```json
     {
@@ -178,7 +175,7 @@ For authentication are used bearer tokens.
     }
     ```
 
-  - [PUT] `/:id` - Update message by ID
+  - [PUT] `/:id` - Update post by ID
 
     ```json
     {
@@ -186,98 +183,4 @@ For authentication are used bearer tokens.
     }
     ```
 
-  - [DELETE] `/:id` - Delete message by ID
-
-- **WebSocket** `/api/ws`
-
-  - [GET] `/` - Connect to all user's rooms
-
-## WebSocket
-
-- Create Message
-
-  ```json
-  {
-    "text": "Hello World!",
-    "command": "CreateMessage",
-    "targetId": "room_id",
-    "roomId": "room_id"
-  }
-  ```
-
-- Update Message
-
-  ```json
-  {
-    "text": "Goodbye World!",
-    "command": "UpdateMessage",
-    "targetId": "message_id",
-    "roomId": "room_id"
-  }
-  ```
-
-- Delete Message
-
-  ```json
-  {
-    "text": "anything",
-    "command": "DeleteMessage",
-    "targetId": "message_id",
-    "roomId": "room_id"
-  }
-  ```
-
-- Add User to Room
-
-  ```json
-  {
-    "text": "anything",
-    "command": "AddUser",
-    "targetId": "user_id",
-    "roomId": "room_id"
-  }
-  ```
-
-- Remove User from Room
-
-  ```json
-  {
-    "text": "anything",
-    "command": "RemoveUser",
-    "targetId": "user_id",
-    "roomId": "room_id"
-  }
-  ```
-
-- Create Room
-
-  ```json
-  {
-    "text": "Room Name",
-    "command": "CreateRoom",
-    "targetId": "anything",
-    "roomId": "anything"
-  }
-  ```
-
-- Update Room
-
-  ```json
-  {
-    "text": "New Room Name",
-    "command": "UpdateRoom",
-    "targetId": "room_id",
-    "roomId": "room_id"
-  }
-  ```
-
-- Delete Room
-
-  ```json
-  {
-    "text": "anything",
-    "command": "DeleteRoom",
-    "targetId": "room_id",
-    "roomId": "room_id"
-  }
-  ```
+  - [DELETE] `/:id` - Delete post by ID

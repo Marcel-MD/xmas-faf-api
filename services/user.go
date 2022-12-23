@@ -26,7 +26,6 @@ type IUserService interface {
 	Update(dto dto.UpdateUser, id string) (models.User, error)
 	AddRole(id string, role string, userID string) (models.User, error)
 	RemoveRole(id string, role string, userID string) (models.User, error)
-	SetIsOnline(id string, isOnline bool) (models.User, error)
 }
 
 type UserService struct {
@@ -69,7 +68,7 @@ func (s *UserService) SearchByEmail(email string) []models.User {
 func (s *UserService) FindOne(id string) (models.User, error) {
 	log.Debug().Str("id", id).Msg("Finding user")
 
-	user, err := s.repository.FindByIdWithRooms(id)
+	user, err := s.repository.FindByIdWithTrainings(id)
 	if err != nil {
 		return user, err
 	}
@@ -87,7 +86,7 @@ func (s *UserService) SendOtp(email string) error {
 
 	mail := Mail{
 		To:      []string{email},
-		Subject: "Rooms - Verification Code",
+		Subject: "Trainings - Verification Code",
 		Body:    fmt.Sprintf("Your verification code is <strong>%s</strong>.", otp),
 	}
 
@@ -126,7 +125,6 @@ func (s *UserService) Register(dto dto.RegisterUser) (models.User, error) {
 		FirstName: dto.FirstName,
 		LastName:  dto.LastName,
 		Email:     dto.Email,
-		Phone:     dto.Phone,
 		Password:  string(hashedPassword),
 		Roles:     []string{models.UserRole},
 	}
@@ -193,7 +191,6 @@ func (s *UserService) Update(dto dto.UpdateUser, id string) (models.User, error)
 	user.FirstName = dto.FirstName
 	user.LastName = dto.LastName
 	user.Email = dto.Email
-	user.Phone = dto.Phone
 
 	err = s.repository.Update(&user)
 	if err != nil {
@@ -256,23 +253,6 @@ func (s *UserService) RemoveRole(id string, role string, userID string) (models.
 	}
 
 	user.Roles = remove(user.Roles, role)
-
-	err = s.repository.Update(&user)
-	if err != nil {
-		return user, err
-	}
-
-	return user, nil
-}
-
-func (s *UserService) SetIsOnline(id string, isOnline bool) (models.User, error) {
-
-	user, err := s.repository.FindByID(id)
-	if err != nil {
-		return user, err
-	}
-
-	user.IsOnline = isOnline
 
 	err = s.repository.Update(&user)
 	if err != nil {

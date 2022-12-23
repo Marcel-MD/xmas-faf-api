@@ -22,9 +22,8 @@ func InitRouter() {
 		r := e.Group("/api")
 
 		routeUserHandler(r)
-		routeRoomHandler(r)
-		routeMessageHandler(r)
-		routeWebSocketHandler(r)
+		routeTrainingHandler(r)
+		routePostHandler(r)
 
 		port := os.Getenv("PORT")
 		if port == "" {

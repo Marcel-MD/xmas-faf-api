@@ -1,9 +1,9 @@
 package dto
 
-type CreateRoom struct {
+type CreateTraining struct {
 	Name string `json:"name" binding:"required,min=3,max=50"`
 }
 
-type UpdateRoom struct {
+type UpdateTraining struct {
 	Name string `json:"name" binding:"required,min=3,max=50"`
 }

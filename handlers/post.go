@@ -10,26 +10,26 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type messageHandler struct {
-	service services.IMessageService
+type postHandler struct {
+	service services.IPostService
 }
 
-func routeMessageHandler(router *gin.RouterGroup) {
-	h := &messageHandler{
-		service: services.GetMessageService(),
+func routePostHandler(router *gin.RouterGroup) {
+	h := &postHandler{
+		service: services.GetPostService(),
 	}
 
-	r := router.Group("/messages").Use(middleware.JwtAuth())
-	r.GET("/:room_id", h.find)
-	r.POST("/:room_id", h.create)
+	r := router.Group("/posts").Use(middleware.JwtAuth())
+	r.GET("/:training_id", h.find)
+	r.POST("/:training_id", h.create)
 	r.PUT("/:id", h.update)
 	r.DELETE("/:id", h.delete)
 }
 
-func (h *messageHandler) find(c *gin.Context) {
-	roomID := c.Param("room_id")
+func (h *postHandler) find(c *gin.Context) {
+	trainingID := c.Param("training_id")
 	var err error
-	params := dto.MessageQueryParams{}
+	params := dto.PostQueryParams{}
 
 	params.Page, err = strconv.Atoi(c.Query("page"))
 	if err != nil {
@@ -43,19 +43,19 @@ func (h *messageHandler) find(c *gin.Context) {
 
 	userID := c.GetString("user_id")
 
-	messages, err := h.service.FindByRoomID(roomID, userID, params)
+	posts, err := h.service.FindByTrainingID(trainingID, userID, params)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	c.JSON(http.StatusOK, messages)
+	c.JSON(http.StatusOK, posts)
 }
 
-func (h *messageHandler) create(c *gin.Context) {
-	roomID := c.Param("room_id")
+func (h *postHandler) create(c *gin.Context) {
+	trainingID := c.Param("training_id")
 
-	var dto dto.CreateMessage
+	var dto dto.CreatePost
 	if err := c.ShouldBindJSON(&dto); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
@@ -63,19 +63,19 @@ func (h *messageHandler) create(c *gin.Context) {
 
 	userID := c.GetString("user_id")
 
-	message, err := h.service.Create(roomID, userID, dto)
+	post, err := h.service.Create(trainingID, userID, dto)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	c.JSON(http.StatusOK, message)
+	c.JSON(http.StatusOK, post)
 }
 
-func (h *messageHandler) update(c *gin.Context) {
+func (h *postHandler) update(c *gin.Context) {
 	id := c.Param("id")
 
-	var dto dto.UpdateMessage
+	var dto dto.UpdatePost
 	if err := c.ShouldBindJSON(&dto); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
@@ -83,25 +83,25 @@ func (h *messageHandler) update(c *gin.Context) {
 
 	userID := c.GetString("user_id")
 
-	message, err := h.service.Update(id, userID, dto)
+	post, err := h.service.Update(id, userID, dto)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	c.JSON(http.StatusOK, message)
+	c.JSON(http.StatusOK, post)
 }
 
-func (h *messageHandler) delete(c *gin.Context) {
+func (h *postHandler) delete(c *gin.Context) {
 	id := c.Param("id")
 
 	userID := c.GetString("user_id")
 
-	message, err := h.service.Delete(id, userID)
+	post, err := h.service.Delete(id, userID)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	c.JSON(http.StatusOK, message)
+	c.JSON(http.StatusOK, post)
 }

@@ -12,7 +12,7 @@ type IUserRepository interface {
 	FindAll() []models.User
 	SearchByEmail(email string) []models.User
 	FindByID(id string) (models.User, error)
-	FindByIdWithRooms(id string) (models.User, error)
+	FindByIdWithTrainings(id string) (models.User, error)
 	FindByEmail(email string) (models.User, error)
 	Create(user *models.User) error
 	Update(user *models.User) error
@@ -56,9 +56,9 @@ func (r *UserRepository) SearchByEmail(email string) []models.User {
 	return users
 }
 
-func (r *UserRepository) FindByIdWithRooms(id string) (models.User, error) {
+func (r *UserRepository) FindByIdWithTrainings(id string) (models.User, error) {
 	var user models.User
-	err := r.DB.Model(&models.User{}).Preload("Rooms").First(&user, "id = ?", id).Error
+	err := r.DB.Model(&models.User{}).Preload("Trainings").First(&user, "id = ?", id).Error
 
 	return user, err
 }

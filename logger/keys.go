@@ -1,7 +1,7 @@
 package logger
 
 const (
-	UserID    = "user_id"
-	RoomID    = "room_id"
-	MessageID = "message_id"
+	UserID     = "user_id"
+	TrainingID = "training_id"
+	PostID     = "post_id"
 )

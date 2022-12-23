@@ -125,7 +125,7 @@ func (h *userHandler) sendOtp(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"message": "otp sent"})
+	c.JSON(http.StatusOK, gin.H{"post": "otp sent"})
 }
 
 func (h *userHandler) current(c *gin.Context) {

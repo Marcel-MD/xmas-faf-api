@@ -10,10 +10,9 @@ type User struct {
 	Phone     string `json:"-"`
 	Password  string `json:"-"`
 
-	Roles    pq.StringArray `json:"roles" gorm:"type:text[]"`
-	IsOnline bool           `json:"isOnline"`
+	Roles pq.StringArray `json:"roles" gorm:"type:text[]"`
 
-	Rooms []Room `json:"rooms" gorm:"many2many:room_users;constraint:OnDelete:CASCADE"`
+	Trainings []Training `json:"trainings" gorm:"many2many:training_users;constraint:OnDelete:CASCADE"`
 }
 
 func (u *User) HasRole(role string) bool {
