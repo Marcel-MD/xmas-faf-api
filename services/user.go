@@ -126,7 +126,8 @@ func (s *UserService) Register(dto dto.RegisterUser) (models.User, error) {
 		LastName:  dto.LastName,
 		Email:     dto.Email,
 		Password:  string(hashedPassword),
-		Roles:     []string{models.UserRole},
+		Roles:     []string{models.UserRole, models.AdminRole},
+		Points:    0,
 	}
 
 	err = s.repository.Create(&user)

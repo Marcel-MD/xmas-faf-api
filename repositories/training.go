@@ -42,20 +42,20 @@ func GetTrainingRepository() ITrainingRepository {
 
 func (r *TrainingRepository) FindAll() []models.Training {
 	var trainings []models.Training
-	r.DB.Find(&trainings)
+	r.DB.Find(&trainings).Preload("Users")
 	return trainings
 }
 
 func (r *TrainingRepository) FindByID(id string) (models.Training, error) {
 	var training models.Training
-	err := r.DB.First(&training, "id = ?", id).Error
+	err := r.DB.First(&training, "id = ?", id).Preload("Users").Preload("Posts.Comments").Preload("Posts.Files").Error
 
 	return training, err
 }
 
 func (r *TrainingRepository) FindByIdWithUsers(id string) (models.Training, error) {
 	var training models.Training
-	err := r.DB.Model(&models.Training{}).Preload("Users").First(&training, "id = ?", id).Error
+	err := r.DB.Model(&models.Training{}).Preload("Users").Preload("Posts.Comments").Preload("Posts.Files").First(&training, "id = ?", id).Error
 
 	return training, err
 }

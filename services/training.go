@@ -69,8 +69,11 @@ func (s *TrainingService) Create(dto dto.CreateTraining, userID string) (models.
 	}
 
 	training := models.Training{
-		Name:    dto.Name,
-		OwnerID: userID,
+		Name:     dto.Name,
+		OwnerID:  userID,
+		Image:    dto.Image,
+		Price:    dto.Price,
+		Category: dto.Category,
 	}
 
 	err = s.trainingRepository.Create(&training)
@@ -101,6 +104,7 @@ func (s *TrainingService) Update(trainingID, userID string, dto dto.UpdateTraini
 	training.Name = dto.Name
 	training.Price = dto.Price
 	training.Category = dto.Category
+	training.Image = dto.Image
 
 	err = s.trainingRepository.Update(&training)
 	if err != nil {

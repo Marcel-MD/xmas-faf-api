@@ -8,4 +8,5 @@ type Training struct {
 	Category string `json:"category"`
 	Users    []User `json:"users" gorm:"many2many:training_users;constraint:OnDelete:CASCADE"`
 	Posts    []Post `json:"posts" gorm:"foreignKey:TrainingID;constraint:OnDelete:CASCADE"`
+	Image    string `json:"image"`
 }

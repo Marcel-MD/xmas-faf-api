@@ -112,6 +112,7 @@ func (s *PostService) Update(postID, userID string, dto dto.UpdatePost) (models.
 	}
 
 	post.Text = dto.Text
+	post.Title = dto.Title
 
 	err = s.postRepository.Update(&post)
 	if err != nil {

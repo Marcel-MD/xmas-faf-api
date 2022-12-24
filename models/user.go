@@ -14,6 +14,8 @@ type User struct {
 
 	Trainings []Training `json:"trainings" gorm:"many2many:training_users;constraint:OnDelete:CASCADE"`
 	Comments  []Comment  `json:"comments" gorm:"foreignKey:UserID;constraint:OnDelete:CASCADE"`
+
+	Points int `json:"points"`
 }
 
 func (u *User) HasRole(role string) bool {
