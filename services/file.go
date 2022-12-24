@@ -2,6 +2,7 @@ package services
 
 import (
 	"path"
+	"strings"
 	"sync"
 
 	"github.com/Marcel-MD/xmas-faf-api/models"
@@ -18,6 +19,7 @@ type IFileService interface {
 type FileService struct {
 	blobService    IBlobService
 	fileRepository repositories.IFileRepository
+	postRepository repositories.IPostRepository
 }
 
 var (
@@ -30,6 +32,7 @@ func GetFileService() IFileService {
 		fileService = &FileService{
 			blobService:    GetBlobService(),
 			fileRepository: repositories.GetFileRepository(),
+			postRepository: repositories.GetPostRepository(),
 		}
 	})
 
@@ -46,10 +49,18 @@ func (s *FileService) FindByID(id string) (models.File, error) {
 
 func (s *FileService) Create(postID, fileName string, data []byte) (models.File, error) {
 
+	_, err := s.postRepository.FindByID(postID)
+
+	if err != nil {
+		return models.File{}, err
+	}
+
 	url, err := s.blobService.Upload(fileName, data)
 	if err != nil {
 		return models.File{}, err
 	}
+
+	url = strings.Replace(url, "azurite", "localhost", 1)
 
 	file := models.File{
 		PostID: postID,

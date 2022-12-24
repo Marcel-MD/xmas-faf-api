@@ -15,6 +15,7 @@ import (
 type IBlobService interface {
 	Upload(fileName string, data []byte) (string, error)
 	Delete(fileName string) error
+	Get(filename string) (*azblob.DownloadResponse, error)
 }
 
 type BlobService struct {
@@ -92,4 +93,16 @@ func (s *BlobService) Delete(fileName string) error {
 	// Delete the blob
 	_, err := blobURL.Delete(context.Background(), azblob.DeleteSnapshotsOptionInclude, azblob.BlobAccessConditions{})
 	return err
+}
+
+func (s *BlobService) Get(fileName string) (*azblob.DownloadResponse, error) {
+
+	blobUrl := s.containerUrl.NewBlockBlobURL(fileName)
+
+	downloadResponse, err := blobUrl.Download(context.Background(), 0, azblob.CountToEnd, azblob.BlobAccessConditions{}, false, azblob.ClientProvidedKeyOptions{})
+	if err != nil {
+		return nil, err
+	}
+
+	return downloadResponse, err
 }

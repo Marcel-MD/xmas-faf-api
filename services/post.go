@@ -87,6 +87,7 @@ func (s *PostService) Create(trainingID, userID string, dto dto.CreatePost) (mod
 	}
 
 	post.Text = dto.Text
+	post.Title = dto.Title
 	post.TrainingID = trainingID
 	post.UserID = userID
 
