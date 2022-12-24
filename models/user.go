@@ -13,6 +13,7 @@ type User struct {
 	Roles pq.StringArray `json:"roles" gorm:"type:text[]"`
 
 	Trainings []Training `json:"trainings" gorm:"many2many:training_users;constraint:OnDelete:CASCADE"`
+	Comments  []Comment  `json:"comments" gorm:"foreignKey:UserID;constraint:OnDelete:CASCADE"`
 }
 
 func (u *User) HasRole(role string) bool {

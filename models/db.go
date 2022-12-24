@@ -33,6 +33,7 @@ func initDB() *gorm.DB {
 	db.AutoMigrate(&Training{})
 	db.AutoMigrate(&Post{})
 	db.AutoMigrate(&File{})
+	db.AutoMigrate(&Comment{})
 
 	return db
 }

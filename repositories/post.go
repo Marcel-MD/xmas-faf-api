@@ -38,14 +38,14 @@ func GetPostRepository() IPostRepository {
 func (r *PostRepository) FindByTrainingID(trainingID string) []models.Post {
 	var posts []models.Post
 
-	r.DB.Model(&models.Post{}).Preload("Files").Order("created_at desc").Find(&posts, "training_id = ?", trainingID)
+	r.DB.Model(&models.Post{}).Preload("Files").Preload("Comments").Order("created_at desc").Find(&posts, "training_id = ?", trainingID)
 
 	return posts
 }
 
 func (r *PostRepository) FindByID(id string) (models.Post, error) {
 	var post models.Post
-	err := r.DB.First(&post, "id = ?", id).Preload("Files").Error
+	err := r.DB.First(&post, "id = ?", id).Preload("Files").Preload("Comments").Error
 
 	return post, err
 }

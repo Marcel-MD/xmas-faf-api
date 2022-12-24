@@ -99,6 +99,8 @@ func (s *TrainingService) Update(trainingID, userID string, dto dto.UpdateTraini
 	}
 
 	training.Name = dto.Name
+	training.Price = dto.Price
+	training.Category = dto.Category
 
 	err = s.trainingRepository.Update(&training)
 	if err != nil {
